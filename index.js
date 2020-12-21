@@ -44,11 +44,11 @@ app.get('/api/account/google', passport.authenticate('google', { failureRedirect
 app.use(express.static(__dirname+'/public'))
 
 app.get('/', (req, res) => {
-    if (!req.cookies.lets_workout_user) {
-      res.redirect('/login')
-    }
-  
-    res.sendFile(path.join(__dirname+'/public/html/index.html'));
+  if (!req.cookies.lets_workout_user) {
+    res.redirect('/login')
+  }
+
+  res.sendFile(path.join(__dirname+'/public/html/index.html'));
 })
 
 app.get('/welcome', (req, res) => {
