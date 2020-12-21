@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom'
-import {helloWorld} from './components/helloWorld.jsx';
 import {userHeader} from './components/header.jsx';
 
 const cookies = document.cookie.split("; ");

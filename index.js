@@ -6,6 +6,12 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const cookieParser = require('cookie-parser');
 const port = 3000
 const path = require('path')
+const con = require('./backend/sql/connect.js');
+
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
