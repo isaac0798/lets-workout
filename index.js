@@ -7,10 +7,13 @@ const cookieParser = require('cookie-parser');
 const port = 3000
 const path = require('path')
 const con = require('./backend/sql/connect.js');
+const saveUser = require('./backend/sql/repository/saveUser.js');
+var dbConnected = false;
 
 con.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
+    dbConnected = true;
+    con.query("use lets_workout_db");
 });
 
 app.use(passport.initialize());
@@ -30,13 +33,17 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/api/account/google"
   },
   (accessToken, refreshToken, profile, done) => {
+    if (dbConnected) {
+      //save user
+      saveUser(profile, con);
+    }
     return done(null, profile)
   }
 ));
 
 app.get('/auth', passport.authenticate('google', 
   { 
-    scope:  ["profile"], 
+    scope:  ["profile", "email"], 
     prompt: 'select_account'
   }));
 app.get('/auth/error', (req, res) => res.send('Unknown Error'))
@@ -53,12 +60,12 @@ app.get('/', (req, res) => {
   if (!req.cookies.lets_workout_user) {
     res.redirect('/login')
   }
-
+  
   res.sendFile(path.join(__dirname+'/public/html/index.html'));
 })
 
 app.get('/welcome', (req, res) => {
-    res.sendFile(path.join(__dirname+'/public/html/welcome.html'));
+  res.sendFile(path.join(__dirname+'/public/html/welcome.html'));
 })
 
 app.get('/logout', (req, res) => {
