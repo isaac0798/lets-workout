@@ -58,7 +58,7 @@ app.use(express.static(__dirname+'/public'))
 
 app.get('/', (req, res) => {
   if (!req.cookies.lets_workout_user) {
-    res.redirect('/login')
+    res.redirect('/welcome')
   }
   
   res.sendFile(path.join(__dirname+'/public/html/index.html'));
