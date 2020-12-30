@@ -19,6 +19,7 @@ con.connect(function(err) {
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
+app.use('/webapi/weight', require('./backend/controllers/UserWeightController.js'));
 
 passport.serializeUser(function(user, done) {
     done(null, user);
