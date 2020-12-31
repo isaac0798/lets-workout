@@ -6,15 +6,8 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const cookieParser = require('cookie-parser');
 const port = 3000
 const path = require('path')
-const con = require('./backend/sql/connect.js');
+const {dbConnected} = require('./backend/sql/connect.js');
 const saveUser = require('./backend/sql/repository/saveUser.js');
-var dbConnected = false;
-
-con.connect(function(err) {
-    if (err) throw err;
-    dbConnected = true;
-    con.query("use lets_workout_db");
-});
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -35,7 +28,6 @@ passport.use(new GoogleStrategy({
   },
   (accessToken, refreshToken, profile, done) => {
     if (dbConnected) {
-      //save user
       saveUser(profile, con);
     }
     return done(null, profile)
