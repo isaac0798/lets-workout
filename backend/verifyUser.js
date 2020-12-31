@@ -7,11 +7,19 @@ const verifyUser = async (userCookie, requestId) => {
   }
 
   const userEmail = userCookie.emails[0].value;
-  const connection = getConnection();
+  const userId = getUserId(userEmail);
 
-  const userId = await getUserByEmail(userEmail, connection);
-
-  return requestId === userId[0].id;
+  return requestId === userId;
 }
 
-module.exports = verifyUser;
+const getUserId = async (userEmail) => {
+  const connection = getConnection();
+  const userId = await getUserByEmail(userEmail, connection);
+
+  return userId[0].id;
+}
+
+module.exports = {
+  verifyUser,
+  getUserId
+};
