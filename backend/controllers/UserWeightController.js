@@ -1,6 +1,7 @@
 const express = require('express')
 const {verifyUser, getUserId} = require('../verifyUser.js'); 
 const insertWeight = require('../sql/repository/UserWeight/insertWeight.js');
+const getUserWeight = require('../sql/repository/UserWeight/getUserWeight.js');
 const userWeightController = express.Router();
 userWeightController.use(express.json());
 
@@ -13,9 +14,11 @@ userWeightController.get('/:id', async function(req, res) {
 
   if (!verified) {
     res.send("User not verified to see this info");
+    return;
   }
 
-  res.send(`Getting weight data for user ${req.params.id}`);
+  const userWeights = await getUserWeight(req.params.id);
+  res.send(userWeights);
 });
 
 userWeightController.post('/', function(req, res) {

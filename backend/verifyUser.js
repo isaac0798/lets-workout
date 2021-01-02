@@ -7,7 +7,7 @@ const verifyUser = async (userCookie, requestId) => {
   }
 
   const userEmail = userCookie.emails[0].value;
-  const userId = getUserId(userEmail);
+  const userId = await getUserId(userEmail);
 
   return requestId === userId;
 }
