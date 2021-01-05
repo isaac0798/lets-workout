@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useRef} from 'react';
+import Chartjs from"chart.js";
 import dateFormat from 'dateformat';
 
 const weightGraph = (userWeightData) => {
