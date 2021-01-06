@@ -1,7 +1,8 @@
 const path = require('path');
 
 module.exports = {
-  entry: "./public/js/main.js",
+  mode: 'development',
+  entry: ['@babel/polyfill', "./public/js/main.js"],
   module: {
     rules: [
       {
