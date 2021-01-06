@@ -1,5 +1,4 @@
 import ReactDom from 'react-dom'
-import weightGraph from './components/insertWeight.jsx';
 import {loadUserWeightGraph} from './components/userWeightGraph.js';
 
 export const showWeightGraph = (user) => {
