@@ -7,7 +7,7 @@ export const loadUserWeightGraph = (userWeightInfo) => {
   var myChart = new Chart(ctx, {
       type: 'line',
       data: {
-          labels: userWeightInfo.map(day => dateformat(day.date, "dd/mmyy")),
+          labels: userWeightInfo.map(day => dateformat(day.date, "dd/mm/yy")),
           datasets: [{
               label: 'Weight',
               data: userWeightInfo.map(day => day.weight),
