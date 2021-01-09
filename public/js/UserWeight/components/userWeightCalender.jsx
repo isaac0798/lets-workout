@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import dateformat from 'dateformat';
 import moment from 'moment';
 const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export const loadUserWeightCalender = (userWeightData) => {
    const datesInYear = monthArray.map((month) => getMonths(month, 2021)); 
-   console.log(datesInYear);
-   const squareList = datesInYear.flat().map((date) => {
-    return <Square />
+   const squareList = datesInYear.flat().map((date, i) => {
+    const formattedDate = date;
+    const dateMatch = userWeightData.find((data) => {
+      const formattedUserDate = dateformat(data.date, "dd/mm/yy");
+      return date === formattedUserDate;
+    })
+
+    if (dateMatch) {
+      return <Square matched={true}/>
+    }
+    return <Square matched={false}/>
    });
 
   ReactDom.render(
@@ -16,8 +25,12 @@ export const loadUserWeightCalender = (userWeightData) => {
   );
 }
 
-export const Square = (color) => {
-  return <div className="weightSquare"></div>
+export const Square = (props) => {
+  if (!props.matched) {
+    return <div className="weightSquare"></div>
+  }
+
+  return <div className="matchedWeightSquare"></div>
 }
 
 function getMonths(month,year){
