@@ -18,6 +18,7 @@ const insertWeight = async (user, reqParams) => {
   const dailyWeight = await checkForDailyWeight(userEmail, userId, connection);
 
   if (dailyWeight) {
+    console.log('im here');
     updateDailyWeight(reqParams, userId, connection);  
 
     return true;
