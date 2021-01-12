@@ -25,6 +25,7 @@ userWeightController.post('/', function(req, res) {
   if (!req.body) {
     res.send("invalid request");
   }
+  console.log(req.cookies.lets_workout_user);
 
   const response = insertWeight(req.cookies.lets_workout_user, req.body);  
   res.send(response);
