@@ -32,7 +32,6 @@ const postUserWeight = () => {
     "unit": "lbs"
   }
 
-  debugger;
   fetch(`${window.location.origin}/webapi/weight`, {
     method: 'POST',
     credentials: 'include',
