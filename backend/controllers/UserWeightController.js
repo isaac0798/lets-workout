@@ -2,7 +2,10 @@ const express = require('express')
 const {verifyUser, getUserId} = require('../verifyUser.js'); 
 const insertWeight = require('../sql/repository/UserWeight/insertWeight.js');
 const getUserWeight = require('../sql/repository/UserWeight/getUserWeight.js');
+const uploadImage = require('../sql/repository/UserWeight/uploadImage.js');
 const userWeightController = express.Router();
+const multer = require('multer');
+const upload = multer();
 userWeightController.use(express.json());
 
 userWeightController.get('/', function(req, res) {
@@ -28,6 +31,15 @@ userWeightController.post('/', function(req, res) {
   console.log(req.cookies.lets_workout_user);
 
   const response = insertWeight(req.cookies.lets_workout_user, req.body);  
+  res.send(response);
+});
+
+userWeightController.post('/image', upload.single('photo'), function(req, res) {
+  if (!req.body) {
+    res.send("invalid request");
+  }
+
+  const response = uploadImage(req.cookies.lets_workout_user, req.file);  
   res.send(response);
 });
 

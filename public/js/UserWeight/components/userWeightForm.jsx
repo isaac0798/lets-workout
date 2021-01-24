@@ -4,7 +4,6 @@ import {debounce} from 'lodash';
 import dateformat from 'dateformat';
 
 export const userWeightForm = () => {
-  console.log('hellooooo');
   ReactDom.render(weightForm(), document.getElementById("userWeightForm"));
 }
 
