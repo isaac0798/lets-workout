@@ -3,6 +3,7 @@ const {verifyUser, getUserId} = require('../verifyUser.js');
 const insertWeight = require('../sql/repository/UserWeight/insertWeight.js');
 const getUserWeight = require('../sql/repository/UserWeight/getUserWeight.js');
 const uploadImage = require('../sql/repository/UserWeight/uploadImage.js');
+const getImages = require('../sql/repository/UserWeight/getImages.js');
 const userWeightController = express.Router();
 const multer = require('multer');
 const upload = multer();
@@ -12,7 +13,7 @@ userWeightController.get('/', function(req, res) {
   res.send('hello from the user weight controller');
 });
 
-userWeightController.get('/:id', async function(req, res) {
+userWeightController.get('/user/:id', async function(req, res) {
   const verified = await verifyUser(req.cookies.lets_workout_user, parseInt(req.params.id));
 
   if (!verified) {
@@ -40,6 +41,15 @@ userWeightController.post('/image', upload.single('photo'), function(req, res) {
   }
 
   const response = uploadImage(req.cookies.lets_workout_user, req.file);  
+  res.send(response);
+});
+
+userWeightController.get('/image', async function(req, res) {
+  if (!req.body) {
+    res.send("invalid request");
+  }
+
+  const response = await getImages(req.cookies.lets_workout_user, req.file);  
   res.send(response);
 });
 

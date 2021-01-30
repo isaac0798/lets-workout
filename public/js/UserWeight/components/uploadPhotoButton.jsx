@@ -5,7 +5,12 @@ export const uploadPhotoButton = () => {
   ReactDom.render(uploadPhoto(), document.getElementById("photoUpload"));
 }
 
-const uploadPhoto = () => {
+const uploadPhoto = async () => {
+  const response = await fetch(`${window.location.origin}/webapi/weight/image`,{
+    credentials: 'include'
+  });
+  
+  console.log(response);
   return (
     <div id="uploadSection">
       <input id="imageDate" type="date" />
